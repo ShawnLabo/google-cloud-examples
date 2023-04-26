@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "video-slicer"
+version = "0.1.0"
+description = ""
+authors = ["nownabe <nownabe@users.noreply.github.com>"]
+license = "Apache-2.0"
+readme = "README.md"
+packages = [{include = "video_slicer"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+google-cloud-storage = "^2.8.0"
+opencv-python-headless = "^4.7.0.72"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

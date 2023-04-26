@@ -1,2 +1,6 @@
+__pycache__
 .dockerignore
+.gitignore
 Dockerfile
+Dockerfile.job
+sample.mp4

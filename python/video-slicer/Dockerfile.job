@@ -16,4 +16,4 @@ RUN \
 
 COPY . /app
 
-CMD ["uvicorn", "main:app"]
+CMD ["python", "main.py"]

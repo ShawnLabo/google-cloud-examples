@@ -16,4 +16,4 @@ RUN \
 
 COPY . /app
 
-CMD ["python", "main.py"]
+CMD ["python", "main_job.py"]

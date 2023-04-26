@@ -16,4 +16,4 @@ RUN \
 
 COPY . /app
 
-CMD ["uvicorn", "main:app"]
+CMD ["bash", "-c", "uvicorn --host 0.0.0.0 --port $PORT main:app"]

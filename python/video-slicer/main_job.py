@@ -3,15 +3,11 @@ from io import BytesIO
 from tempfile import NamedTemporaryFile
 
 import cv2
-from fastapi import FastAPI
 from google.cloud import storage
-from pydantic import BaseModel
-
-
-client = storage.Client()
 
 
 def download_video(video_uri: str, local_path: str):
+    client = storage.Client()
     bucket_name, blob_name = video_uri[5:].split("/", maxsplit=1)
     bucket = client.bucket(bucket_name)
     video_blob = bucket.blob(blob_name)
@@ -19,6 +15,7 @@ def download_video(video_uri: str, local_path: str):
 
 
 def upload_frames(video: cv2.VideoCapture, output_root: str):
+    client = storage.Client()
     bucket_name, base = output_root[5:].split("/", maxsplit=1)
     bucket = client.bucket(bucket_name)
 
@@ -55,19 +52,12 @@ def slice_video(video_uri: str, output_root: str) -> None:
         upload_frames(video=video, output_root=output_root)
 
 
-app = FastAPI()
+def main() -> None:
+    video_uri = os.environ["INPUT_VIDEO_URI"]
+    output_root = os.environ["OUTPUT_ROOT_URI"]
+
+    slice_video(video_uri, output_root)
 
 
-class RequestBody(BaseModel):
-    input_video_uri: str
-    output_root_uri: str
-
-
-class ResponseBody(BaseModel):
-    success: bool
-
-
-@app.post("/")
-def root(req: RequestBody) -> ResponseBody:
-    slice_video(req.input_video_uri, req.output_root_uri)
-    return ResponseBody(success=True)
+if __name__ == "__main__":
+    main()
